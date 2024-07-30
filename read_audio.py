@@ -8,7 +8,7 @@ FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 44100
 PAUSE = 0.0001
-NUM_BINS = 100
+NUM_BINS = 10000
 
 # Create audio stream
 p = pyaudio.PyAudio()
@@ -33,10 +33,12 @@ ax.set_xlim(0, RATE / 2)
 ax.set_ylim(0, 1)
 
 bin_edges = np.linspace(0, CHUNK // 2, NUM_BINS + 1, dtype=int)
+frequencies = np.linspace(0, RATE / 2, CHUNK // 2)
 
 # Continuously collect sound from audio stream and process it
 try:
     while True:
+
         try:
             if not stream.is_active():
                 stream = open_stream()
@@ -57,12 +59,9 @@ try:
         else:
             normalized_magnitudes = binned_magnitudes / max_magnitude
 
-        for bar, height in zip(bars, normalized_magnitudes):
-            bar.set_height(height)
-        
-        fig.canvas.draw()
-        plt.pause(PAUSE)
-        fig.canvas.flush_events()
+        idx = np.argmax(normalized_magnitudes)
+        print(f"Bin index: {idx}, Frequency: {frequencies[bin_edges[idx]]} Hz")
+
 except KeyboardInterrupt:
     pass
 finally:
