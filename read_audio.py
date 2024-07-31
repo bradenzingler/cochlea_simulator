@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
-RATE = 44100
-PAUSE = 0.0001
-NUM_BINS = 10000
+RATE = 40000
+NUM_BINS = 40
 
 # Create audio stream
 p = pyaudio.PyAudio()
@@ -23,14 +22,6 @@ def open_stream():
     )
 
 stream = open_stream()
-
-# Create plot for real time visualizations. TODO this will not be needed
-fig, ax = plt.subplots()
-x = np.linspace(0, RATE / 2, NUM_BINS)
-bars = ax.bar(x, np.zeros(NUM_BINS), width=RATE/(2*NUM_BINS))
-
-ax.set_xlim(0, RATE / 2)
-ax.set_ylim(0, 1)
 
 bin_edges = np.linspace(0, CHUNK // 2, NUM_BINS + 1, dtype=int)
 frequencies = np.linspace(0, RATE / 2, CHUNK // 2)
