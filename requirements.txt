@@ -3,4 +3,3 @@ scipy
 matplotlib
 rpi_ws281x
 adafruit-circuitpython-neopixel
-adafruit-blinka
