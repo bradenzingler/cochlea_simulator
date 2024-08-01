@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import numpy as np
 from scipy.fftpack import fft, fftfreq
 import pyaudio
@@ -7,7 +8,7 @@ from light_controls import Lights
 CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
-RATE = 40000
+RATE = 44100
 NUM_BINS = 40
 
 # Create audio stream
@@ -30,8 +31,8 @@ lights = Lights()
 bin_edges = np.linspace(0, CHUNK // 2, NUM_BINS + 1, dtype=int)
 frequencies = np.linspace(0, RATE / 2, CHUNK // 2)
 
-print(bin_edges)
-print(frequencies)
+# print(bin_edges)
+# print(frequencies)
 
 # Continuously collect sound from audio stream and process it
 try:
@@ -65,7 +66,9 @@ try:
 
 except KeyboardInterrupt:
     pass
+
 finally:
+    lights.clear()
     stream.stop_stream()
     stream.close()
     p.terminate()

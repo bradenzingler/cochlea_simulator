@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python3
+#!/.venv/bin/env python3
 # NeoPixel library strandtest example
 # Author: Tony DiCola (tony@tonydicola.com)
 #
