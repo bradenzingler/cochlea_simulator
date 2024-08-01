@@ -1,5 +1,6 @@
 from rpi_ws281x import *
 import math
+import numpy as np
 
 ################################# GLOBALS ######################################
 LED_COUNT      = 144     # Number of LED pixels.
@@ -18,36 +19,45 @@ class Lights:
     def __init__(self):
         self.strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.strip.begin()
+        self.previous_pixels = np.zeros(LED_COUNT, dtype=bool)
+        self.current_colors = [Color(0, 0, 0)] * LED_COUNT
     
     def pos_to_pixels(self, pos_in_mm):
         """
         Map the basiliar membrane position (in mm) to LED strip pixels.
         """
         pixels = int((pos_in_mm / BM_LENGTH) * LED_COUNT)
-        return max(0, min(LED_COUNT, pixels))
+        return max(0, min(LED_COUNT-1, pixels))
 
-    def freq_to_pos(self, frequency: float):
+    def freq_to_pos(self, frequency: float) -> float:
         """
         Convert frequency to position (mm) using the Greenwood function.
 
         Reference: Greenwood D. "A cochlear frequency-position for several
         species - 29 years later", J. Acoust. Soc Am. 1990(87) pp2592-2605.
         """
-        a = 2.1
-        A = 165.4
-        pos_in_mm = math.log10((frequency/A)+K) * (BM_LENGTH/a)
-        return pos_in_mm
+        return math.log10((frequency / BIG_A) + K) * (BM_LENGTH / SMALL_A)
 
-    def frequency_to_strip(self, frequency):
+    def frequency_to_color(self, frequency: int) -> None:
+        return Color(255, 255, 255)
+
+    def frequency_to_strip(self, frequency: float) -> None:
         """
-        Light up strip based on frequency.
+        Light up strip based on frequency value.
         """
-        self.clear()
-        pos = self.freq_to_pos(frequency=frequency)
-        pixels = self.pos_to_pixels(pos_in_mm=pos)
-        for i in (pixels):
-            self.strip.setPixelColor(i, Color(255, 255, 255))
-        self.strip.show()
+        pos         = self.freq_to_pos(frequency=frequency)
+        pixels      = self.pos_to_pixels(pos_in_mm=pos)
+        color       = self.frequency_to_color(frequency=frequency)
+        new_colors  = [Color(0, 0, 0)] * LED_COUNT
+
+        for i in range(pixels):
+            new_colors[i] = color
+        
+        if new_colors != self.current_colors:
+            for i in range(LED_COUNT):
+                self.strip.setPixelColor(i, new_colors[i])
+            self.strip.show()
+            self.current_colors = new_colors
     
     def clear(self):
         """
@@ -55,9 +65,4 @@ class Lights:
         """
         for i in range(self.strip.numPixels()):
             self.strip.setPixelColor(i, Color(0, 0, 0))
-            self.strip.show()
-
-if __name__ == "__main__":
-    lights = Lights()
-    pos = lights.frequency_to_strip(frequency=1000)
-    print(pos)
+        self.strip.show()

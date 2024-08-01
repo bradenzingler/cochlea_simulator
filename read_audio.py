@@ -3,6 +3,7 @@ import numpy as np
 from scipy.fftpack import fft
 import pyaudio
 from light_controls import Lights
+import time
 
 #### AUDIO CONFIG ##############################################################
 CHUNK       = 1024                  # Number of btytes to read in per buffer
@@ -46,8 +47,7 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
                 
             idx = np.argmax(normalized_magnitudes)
             freq = frequencies[bin_edges[idx]]
-            lights.frequency_to_color(frequency=freq)
-            print(f"Bin index: {idx}, Frequency: {frequencies[bin_edges[idx]]} Hz")
+            lights.frequency_to_strip(frequency=freq)
 
     except KeyboardInterrupt:
         pass
@@ -59,7 +59,7 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
         stream.close()
         p.terminate()
 
-def initialize():
+def start():
     """
     Initialize and begin stream.
     """
@@ -75,3 +75,5 @@ def initialize():
         bin_edges   = bin_edges,
         p           = p
     )
+
+start()
