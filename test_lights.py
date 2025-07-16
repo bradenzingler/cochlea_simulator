@@ -88,7 +88,22 @@ if __name__ == '__main__':
     # Create NeoPixel object with appropriate configuration.
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
-    strip.begin()
+     
+    print("Initializing LED strip...")
+    try:
+        strip.begin()
+        print("LED strip initialized successfully!")
+    except Exception as e:
+        print(f"Failed to initialize LED strip: {e}")
+        exit(1)
+    
+    # Test with a simple single LED first
+    print("Testing first LED...")
+    strip.setPixelColor(0, Color(255, 0, 0))  # Red
+    strip.show()
+    time.sleep(2)
+    strip.setPixelColor(0, Color(0, 0, 0))    # Off
+    strip.show()
 
     print ('Press Ctrl-C to quit.')
     if not args.clear:

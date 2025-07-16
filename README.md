@@ -14,7 +14,7 @@ and create a virtual environment and install all dependencies.
 3. Plug in your microphone. For this project we are using a Snowball Ice microphone, plugging into the Raspberry Pi 4 via USB.
 
 4. Plug in your LEDs. We are plugging the green data wire into the GPIO 18 pin because it supports PWM. 
-The white ground wire should go to the ground pin.
+The white ground wire should go to the ground pin to maintain a common ground between the Pi and the LED strip.
 Note that we are using an external power supply for the LEDs because the Raspberry Pi cannot 
 support the power required by them, so we do not need to use the red power wire to GPIO.
 
