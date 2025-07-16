@@ -14,6 +14,7 @@ BM_LENGTH      = 1000    # Length of basiliar membrane (mm)
 K              = 0.88    # Greenwood integration constant
 SMALL_A        = 2.1     # Slope of the straight-line portion of freq-pos curve
 BIG_A          = 165.4   # Scale const between characteristic freq + upper freq
+GRADIENT_WIDTH = 8       # How many LEDs the light gradient takes up
 
 class Lights:
     def __init__(self):
@@ -49,18 +50,15 @@ class Lights:
         center_pixel = self.pos_to_pixels(pos_in_mm=pos)
         new_colors = [Color(0, 0, 0)] * LED_COUNT
         
-        # Create a gradient around the center pixel
-        gradient_width = 12  # Total width of the gradient (pixels on each side)
         max_brightness = 255
         
         for i in range(LED_COUNT):
             distance = abs(i - center_pixel)
-            if distance <= gradient_width:
+            if distance <= GRADIENT_WIDTH:
                 # Calculate brightness based on distance (closer = brighter)
-                brightness_factor = 1.0 - (distance / gradient_width)
+                brightness_factor = math.exp(-2.0 * distance / GRADIENT_WIDTH)
                 brightness = int(max_brightness * brightness_factor)
                 
-                # Create a nice color gradient (you can customize this)
                 if brightness > 0:
                     new_colors[i] = Color(brightness, brightness // 2, brightness // 4)
         
