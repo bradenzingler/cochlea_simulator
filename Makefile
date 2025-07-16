@@ -7,4 +7,4 @@ venv:
 	.venv/bin/pip install -r requirements.txt
 
 run:
-	.venv/bin/python3 read_audio.py
+	sudo .venv/bin/python3 read_audio.py
