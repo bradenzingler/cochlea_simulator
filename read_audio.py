@@ -30,11 +30,13 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
     """
     try:
         while True:
+            print("here")
             data = np.frombuffer(
                 stream.read(CHUNK, 
                 exception_on_overflow=False), 
                 np.float32
                 )
+            print(data)
             yf = fft(data)
             magnitudes = np.abs(yf[:CHUNK // 2])
             binned_magnitudes = [np.sum(magnitudes[bin_edges[i]:bin_edges[i + 1]]) for i in range(NUM_BINS)]
@@ -47,6 +49,7 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
                 
             idx = np.argmax(normalized_magnitudes)
             freq = frequencies[bin_edges[idx]]
+            print(freq)
             lights.frequency_to_strip(frequency=freq)
 
     except KeyboardInterrupt:
@@ -54,7 +57,7 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
         pass
 
     finally:
-        print("Exiting...")
+        print("\nExiting...")
         lights.clear()
         stream.stop_stream()
         stream.close()
