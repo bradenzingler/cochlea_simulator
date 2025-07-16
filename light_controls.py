@@ -43,15 +43,26 @@ class Lights:
 
     def frequency_to_strip(self, frequency: float) -> None:
         """
-        Light up strip based on frequency value.
+        Light up strip based on frequency value with a gradient around the target position.
         """
-        pos         = self.freq_to_pos(frequency=frequency)
-        pixels      = self.pos_to_pixels(pos_in_mm=pos)
-        color       = self.frequency_to_color(frequency=frequency)
-        new_colors  = [Color(0, 0, 0)] * LED_COUNT
-
-        for i in range(pixels):
-            new_colors[i] = color
+        pos = self.freq_to_pos(frequency=frequency)
+        center_pixel = self.pos_to_pixels(pos_in_mm=pos)
+        new_colors = [Color(0, 0, 0)] * LED_COUNT
+        
+        # Create a gradient around the center pixel
+        gradient_width = 12  # Total width of the gradient (pixels on each side)
+        max_brightness = 255
+        
+        for i in range(LED_COUNT):
+            distance = abs(i - center_pixel)
+            if distance <= gradient_width:
+                # Calculate brightness based on distance (closer = brighter)
+                brightness_factor = 1.0 - (distance / gradient_width)
+                brightness = int(max_brightness * brightness_factor)
+                
+                # Create a nice color gradient (you can customize this)
+                if brightness > 0:
+                    new_colors[i] = Color(brightness, brightness // 2, brightness // 4)
         
         if new_colors != self.current_colors:
             for i in range(LED_COUNT):
