@@ -26,7 +26,7 @@ def open_stream(p):
 
 def read_audio(stream, frequencies, lights, bin_edges, p):
     """
-    Read audio input from the opened audio stream
+    Read audio input from the opened audio stream.
     """
     try:
         while True:
@@ -50,6 +50,7 @@ def read_audio(stream, frequencies, lights, bin_edges, p):
             lights.frequency_to_strip(frequency=freq)
 
     except KeyboardInterrupt:
+        # Allow keyboard to cancel the program
         pass
 
     finally:
