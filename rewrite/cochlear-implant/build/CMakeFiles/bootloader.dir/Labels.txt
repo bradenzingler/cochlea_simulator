@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/CMakeFiles/bootloader
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/CMakeFiles/bootloader.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/CMakeFiles/bootloader-complete.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

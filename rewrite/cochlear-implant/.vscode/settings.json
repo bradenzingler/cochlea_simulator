@@ -1,0 +1,21 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPath": "/opt/esp/idf",
+  "idf.pythonInstallPath": "/usr/bin/python3",
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.port": "/dev/ttyS0",
+  "idf.toolsPath": "/opt/esp",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+},
+"files.associations": {
+    "task.h": "c",
+    "inttypes.h": "c",
+    "esp_mac.h": "c",
+    "gpio.h": "c",
+    "stdint.h": "c",
+    "stdbool.h": "c"
+}
+}
