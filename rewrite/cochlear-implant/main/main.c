@@ -10,15 +10,17 @@ static void fft_task(void *arg)
     size_t bytes_read;
     while (1)
     {
-
         esp_err_t ret = read_audio_data(audio_buffer, sizeof(audio_buffer), &bytes_read);
         if (ret != ESP_OK || bytes_read <= 0)
         {
             printf("Error reading audio: %s\n", esp_err_to_name(ret));
             continue;
         }
-        int16_t samples_read = bytes_read / sizeof(int16_t);
-        process_fft(audio_buffer, samples_read);
+        int samples_read = bytes_read / sizeof(int32_t);
+        if (samples_read >= AUDIO_BUFFER_SIZE) {
+            process_fft(audio_buffer, samples_read);
+        }
+        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
 

@@ -83,7 +83,7 @@ void process_fft(int32_t *audio_samples, int num_samples)
     for (int i = 0; i < AUDIO_BUFFER_SIZE; i++)
     {
         // Shift to drop lower 8 bits (24bit I2S, convert from int32 to float)
-        float sample = (float)(audio_samples[i] >> 8) / 8388608.0f;
+        float sample = (float)((audio_samples[i] >> 8) >> 23);
         fft_input[i << 1] = sample * wind[i];
         fft_input[(i << 1) + 1] = 0.0f; // Imaginary
     }
@@ -100,26 +100,24 @@ void process_fft(int32_t *audio_samples, int num_samples)
     dsps_bit_rev_fc32(fft_input, AUDIO_BUFFER_SIZE);
 
     // Convert to magnitude spectrum
-    dsps_cplx2reC_fc32(fft_input, AUDIO_BUFFER_SIZE);
+    // dsps_cplx2reC_fc32(fft_input, AUDIO_BUFFER_SIZE);
 
     // Calculate magnitude and find dominant frequencies
-    float max_magnitude = 0;
-    int dominant_bin = 0;
+    float max_pow = 0.0f;
+    int peak = 0;
 
-    for (int i = 1; i < AUDIO_BUFFER_SIZE >> 1; i++)
+    for (int i = 1; i < (AUDIO_BUFFER_SIZE >> 1); i++)
     {
         float real = fft_input[i << 1];
         float imag = fft_input[(i << 1) + 1];
+        float p = real * real + imag * imag;
 
-        float magnitude = sqrtf(real * real + imag * imag) / AUDIO_BUFFER_SIZE;
-
-        if (magnitude > max_magnitude)
-        {
-            max_magnitude = magnitude;
-            dominant_bin = i;
+        if (p > max_pow) {
+            max_pow = p;
+            peak = i;
         }
     }
 
-    float dominant_frequency = (float)((dominant_bin * SAMPLE_RATE) >> AUDIO_BUFFER_BITS);
-    printf("Dominant frequency: %.1f Hz (magnitude: %.4f)\n", dominant_frequency, max_magnitude);
+    float dominant_frequency = (float)((peak * SAMPLE_RATE) >> AUDIO_BUFFER_BITS);
+    printf("Frequency: %.1f Hz\n", dominant_frequency);
 }
