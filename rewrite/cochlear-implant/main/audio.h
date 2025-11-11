@@ -18,7 +18,7 @@
 
 #define SAMPLE_RATE 44100
 
-#define AUDIO_BUFFER_SIZE 256
+#define AUDIO_BUFFER_SIZE 2048
 
 void init_audio(void);
 
