@@ -72,4 +72,8 @@ $<TARGET_FILE:idf::freertos>
 $<TARGET_FILE:idf::esp_libc>
 $<TARGET_FILE:idf::pthread>
 $<TARGET_FILE:idf::cxx>
+$<TARGET_FILE:idf::esp_driver_i2s>
+$<TARGET_FILE:idf::espressif__esp-dsp>
 $<TARGET_FILE:idf::main>
+$<TARGET_FILE:__idf_esp_driver_i2s>
+$<TARGET_FILE:__idf_espressif__esp-dsp>

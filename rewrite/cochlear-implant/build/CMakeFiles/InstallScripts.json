@@ -56,6 +56,8 @@
 		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/esp_libc/src/port/cmake_install.cmake",
 		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/pthread/cmake_install.cmake",
 		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/cxx/cmake_install.cmake",
+		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/esp_driver_i2s/cmake_install.cmake",
+		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/espressif__esp-dsp/cmake_install.cmake",
 		"/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/main/cmake_install.cmake"
 	],
 	"Parallel" : false

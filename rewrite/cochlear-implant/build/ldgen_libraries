@@ -72,4 +72,8 @@
 /workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/esp_libc/libesp_libc.a
 /workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/pthread/libpthread.a
 /workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/cxx/libcxx.a
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/espressif__esp-dsp/libespressif__esp-dsp.a
 /workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/main/libmain.a
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/esp_driver_i2s/libesp_driver_i2s.a
+/workspaces/cochlea_simulator/rewrite/cochlear-implant/build/esp-idf/espressif__esp-dsp/libespressif__esp-dsp.a

@@ -16,6 +16,8 @@
     "esp_mac.h": "c",
     "gpio.h": "c",
     "stdint.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "audio.h": "c",
+    "esp_log.h": "c"
 }
 }
