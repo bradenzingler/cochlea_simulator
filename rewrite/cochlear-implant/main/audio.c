@@ -84,8 +84,8 @@ void process_fft(int32_t *audio_samples, int num_samples)
     {
         // Shift to drop lower 8 bits (24bit I2S, convert from int32 to float)
         float sample = (float)(audio_samples[i] >> 8) / 8388608.0f;
-        fft_input[i * 2 + 0] = sample * wind[i];
-        fft_input[i * 2 + 1] = 0.0f; // Imaginary
+        fft_input[i << 1] = sample * wind[i];
+        fft_input[(i << 1) + 1] = 0.0f; // Imaginary
     }
  
     // Perform FFT
@@ -106,13 +106,12 @@ void process_fft(int32_t *audio_samples, int num_samples)
     float max_magnitude = 0;
     int dominant_bin = 0;
 
-    for (int i = 1; i < AUDIO_BUFFER_SIZE / 2; i++)
+    for (int i = 1; i < AUDIO_BUFFER_SIZE >> 1; i++)
     {
-        float real = fft_input[i * 2 + 0];
-        float imag = fft_input[i * 2 + 1];
+        float real = fft_input[i << 1];
+        float imag = fft_input[(i << 1) + 1];
 
         float magnitude = sqrtf(real * real + imag * imag) / AUDIO_BUFFER_SIZE;
-        float frequency = (float)i * SAMPLE_RATE / AUDIO_BUFFER_SIZE;
 
         if (magnitude > max_magnitude)
         {
@@ -121,6 +120,6 @@ void process_fft(int32_t *audio_samples, int num_samples)
         }
     }
 
-    float dominant_frequency = (float)dominant_bin * SAMPLE_RATE / AUDIO_BUFFER_SIZE;
+    float dominant_frequency = (float)((dominant_bin * SAMPLE_RATE) >> AUDIO_BUFFER_BITS);
     printf("Dominant frequency: %.1f Hz (magnitude: %.4f)\n", dominant_frequency, max_magnitude);
 }
